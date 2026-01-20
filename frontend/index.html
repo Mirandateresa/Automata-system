@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Autómatas - Colores Rosas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-robot"></i> Sistema de Autómatas</h1>
+            <p class="subtitle">Implementando estructuras CASE y WHILE con colores rosas</p>
+        </header>
+
+        <main class="main-content">
+            <div class="control-panel">
+                <div class="input-section">
+                    <h2><i class="fas fa-keyboard"></i> Entrada de Cadena</h2>
+                    <div class="input-group">
+                        <input type="text" id="inputString" placeholder="Ingresa una cadena para procesar...">
+                        <button id="processBtn" class="btn-primary">
+                            <i class="fas fa-play"></i> Procesar
+                        </button>
+                    </div>
+                    <div class="examples">
+                        <p class="examples-title">Ejemplos:</p>
+                        <div class="example-buttons">
+                            <button class="btn-example" data-example="101101">101101 (Par)</button>
+                            <button class="btn-example" data-example="1101">1101 (Impar)</button>
+                            <button class="btn-example" data-example="aei">aei (Válido)</button>
+                            <button class="btn-example" data-example="xyyx">xyyx (Personalizado)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="automata-selector">
+                    <h2><i class="fas fa-cogs"></i> Selecciona un Autómata</h2>
+                    <div class="automata-options" id="automataOptions">
+                        <!-- Las opciones se cargarán con JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2><i class="fas fa-chart-bar"></i> Resultados</h2>
+                <div class="result-card" id="resultCard">
+                    <div class="result-placeholder">
+                        <i class="fas fa-microchip"></i>
+                        <p>Los resultados aparecerán aquí después de procesar una cadena</p>
+                    </div>
+                </div>
+                
+                <div class="details-section" id="detailsSection">
+                    <!-- Los detalles del procesamiento aparecerán aquí -->
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Acerca de los Autómatas</h3>
+                    <p>Este sistema implementa diferentes autómatas utilizando:</p>
+                    <ul>
+                        <li><strong>Estructura CASE/SWITCH</strong>: Para definir transiciones entre estados</li>
+                        <li><strong>Estructura WHILE</strong>: Para recorrer las cadenas de entrada</li>
+                        <li><strong>Estados finitos</strong>: Cada autómata tiene estados definidos</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-code"></i> Código de Ejemplo</h3>
+                    <pre><code>// Estructura CASE en el autómata
+switch(estado) {
+  case 0:
+    if (simbolo === '1') estado = 1;
+    break;
+  case 1:
+    if (simbolo === '1') estado = 0;
+    break;
+}
+
+// Estructura WHILE para recorrer
+let i = 0;
+while(i < cadena.length) {
+  // Procesar símbolo
+  i++;
+}</code></pre>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Sistema de Autómatas &copy; 2023 - Implementando estructuras CASE y WHILE</p>
+            <p class="color-scheme">Esquema de colores: Rosas pastel</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

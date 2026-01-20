@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejecutor de WHILE y CASE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #ffe6f2 0%, #ffccdd 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #ff66b2, #ff99cc);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: #fffafc;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #ffb3d9;
+        }
+        
+        h2 {
+            color: #cc0066;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            border: 2px solid #ff99cc;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            background: white;
+            resize: vertical;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #ff66b2;
+            box-shadow: 0 0 0 3px rgba(255, 102, 178, 0.2);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #ff66b2, #ff3385);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #ff3385, #e60073);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 133, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #ffccdd;
+            color: #cc0066;
+            border: 2px solid #ff99cc;
+        }
+        
+        .btn-secondary:hover {
+            background: #ffb3d9;
+        }
+        
+        .output {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: white;
+            border: 2px solid #ff99cc;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff0f5;
+            border-radius: 8px;
+            border-left: 4px solid #ff66b2;
+        }
+        
+        .examples h3 {
+            color: #cc0066;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .example-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .example-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 2px solid #ff99cc;
+            border-radius: 6px;
+            color: #cc0066;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: left;
+        }
+        
+        .example-btn:hover {
+            background: #ffebf3;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #cc6699;
+            font-size: 12px;
+            border-top: 2px solid #ffebf3;
+        }
+        
+        .success {
+            color: #00aa00;
+        }
+        
+        .error {
+            color: #ff3333;
+            font-weight: bold;
+        }
+        
+        .info {
+            color: #ff66b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Ejecutor de Estructuras WHILE y CASE</h1>
+            <p>Escribe código JavaScript con WHILE y CASE - Ve los resultados en tiempo real</p>
+        </div>
+        
+        <div class="main">
+            <div class="panel">
+                <h2>📝 Escribe tu código aquí:</h2>
+                <textarea id="codeInput">// EJEMPLO 1: Contador con WHILE y CASE
+let contador = 0;
+let resultado = "";
+
+while (contador < 5) {
+    switch(contador) {
+        case 0:
+            resultado += "Cero ";
+            break;
+        case 1:
+            resultado += "Uno ";
+            break;
+        case 2:
+            resultado += "Dos ";
+            break;
+        case 3:
+            resultado += "Tres ";
+            break;
+        default:
+            resultado += "Mayor ";
+    }
+    contador++;
+}
+
+console.log("Resultado del contador:", resultado);
+
+// EJEMPLO 2: Verificar cadena binaria
+function esBinario(cadena) {
+    let i = 0;
+    let esValido = true;
+    
+    while (i < cadena.length && esValido) {
+        switch(cadena[i]) {
+            case '0':
+            case '1':
+                // Símbolo válido, continuar
+                break;
+            default:
+                esValido = false;
+                console.log(`Error en posición ${i}: '${cadena[i]}' no es binario`);
+        }
+        i++;
+    }
+    
+    return esValido;
+}
+
+// Prueba
+const prueba1 = "10101";
+const prueba2 = "10201";
+console.log(`¿'${prueba1}' es binario?`, esBinario(prueba1));
+console.log(`¿'${prueba2}' es binario?`, esBinario(prueba2));</textarea>
+                
+                <div class="buttons">
+                    <button class="btn-primary" onclick="ejecutarCodigo()">
+                        ▶ Ejecutar Código (Ctrl+Enter)
+                    </button>
+                    <button class="btn-secondary" onclick="limpiarSalida()">
+                        🗑️ Limpiar Salida
+                    </button>
+                </div>
+                
+                <div class="examples">
+                    <h3>📚 Ejemplos rápidos:</h3>
+                    <div class="example-buttons">
+                        <button class="example-btn" onclick="cargarEjemplo(1)">1. Contador básico</button>
+                        <button class="example-btn" onclick="cargarEjemplo(2)">2. Verificar binario</button>
+                        <button class="example-btn" onclick="cargarEjemplo(3)">3. Autómata par/impar</button>
+                        <button class="example-btn" onclick="cargarEjemplo(4)">4. Secuencia vocales</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>📊 Resultados de ejecución:</h2>
+                <div id="outputArea" class="output">
+Escribe código en el panel izquierdo y presiona "Ejecutar Código".
+
+Los resultados aparecerán aquí...
+                </div>
+                
+                <div class="examples">
+                    <h3>💡 Consejos:</h3>
+                    <ul style="margin-left: 20px; color: #666; font-size: 13px;">
+                        <li>Usa <code>console.log()</code> para mostrar resultados</li>
+                        <li>Puedes definir funciones y luego llamarlas</li>
+                        <li>Presiona Ctrl+Enter para ejecutar rápidamente</li>
+                        <li>Prueba los ejemplos para ver cómo funcionan WHILE y CASE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Ejecutor interactivo de JavaScript | Estructuras WHILE y CASE | Resultados en tiempo real</p>
+        </div>
+    </div>
+
+    <script>
+        // Referencias a elementos
+        const codeInput = document.getElementById('codeInput');
+        const outputArea = document.getElementById('outputArea');
+        
+        // Configurar Ctrl+Enter para ejecutar
+        codeInput.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                ejecutarCodigo();
+                e.preventDefault();
+            }
+        });
+        
+        // Función principal para ejecutar código
+        function ejecutarCodigo() {
+            const codigo = codeInput.value;
+            
+            // Mostrar mensaje de ejecución
+            outputArea.innerHTML = '<span class="info">⚙️ Ejecutando código...</span>';
+            
+            // Pequeño delay para que se vea el mensaje
+            setTimeout(() => {
+                try {
+                    // Capturar todas las salidas de console
+                    let outputLines = [];
+                    
+                    // Guardar referencia original de console.log
+                    const originalConsoleLog = console.log;
+                    const originalConsoleError = console.error;
+                    const originalConsoleWarn = console.warn;
+                    const originalConsoleInfo = console.info;
+                    
+                    // Sobrescribir console para capturar salida
+                    console.log = function(...args) {
+                        outputLines.push(args.join(' '));
+                        originalConsoleLog.apply(console, args);
+                    };
+                    
+                    console.error = function(...args) {
+                        outputLines.push('❌ ERROR: ' + args.join(' '));
+                        originalConsoleError.apply(console, args);
+                    };
+                    
+                    console.warn = function(...args) {
+                        outputLines.push('⚠️ ADVERTENCIA: ' + args.join(' '));
+                        originalConsoleWarn.apply(console, args);
+                    };
+                    
+                    console.info = function(...args) {
+                        outputLines.push('ℹ️ INFO: ' + args.join(' '));
+                        originalConsoleInfo.apply(console, args);
+                    };
+                    
+                    // Ejecutar el código
+                    const resultado = eval(codigo);
+                    
+                    // Si el código retorna algo directamente (no usando console.log)
+                    if (resultado !== undefined && outputLines.length === 0) {
+                        outputLines.push('↪️ Retorno: ' + String(resultado));
+                    }
+                    
+                    // Restaurar console original
+                    console.log = originalConsoleLog;
+                    console.error = originalConsoleError;
+                    console.warn = originalConsoleWarn;
+                    console.info = originalConsoleInfo;
+                    
+                    // Mostrar resultados
+                    if (outputLines.length === 0) {
+                        outputArea.innerHTML = '<span class="success">✅ Código ejecutado correctamente.</span><br>' +
+                                             '<span class="info">(No se generó ninguna salida con console.log)</span>';
+                    } else {
+                        // Formatear la salida con colores y estilos
+                        const formattedOutput = outputLines.map(line => {
+                            let className = '';
+                            if (line.includes('❌ ERROR')) className = 'error';
+                            else if (line.includes('✅')) className = 'success';
+                            else if (line.includes('⚠️') || line.includes('ℹ️')) className = 'info';
+                            
+                            return `<div class="${className}">${line}</div>`;
+                        }).join('');
+                        
+                        outputArea.innerHTML = formattedOutput;
+                    }
+                    
+                } catch (error) {
+                    // Mostrar error detallado
+                    outputArea.innerHTML = `<div class="error">
+                        <strong>❌ Error de ejecución:</strong><br><br>
+                        <strong>Tipo:</strong> ${error.name}<br>
+                        <strong>Mensaje:</strong> ${error.message}<br>
+                        <strong>Línea aproximada:</strong> ${error.lineNumber || 'N/A'}<br><br>
+                        <details style="font-size: 12px; color: #666;">
+                            <summary>Ver stack trace</summary>
+                            <pre style="margin-top: 5px;">${error.stack}</pre>
+                        </details>
+                    </div>`;
+                }
+                
+                // Hacer scroll al final del área de salida
+                outputArea.scrollTop = outputArea.scrollHeight;
+            }, 50);
+        }
+        
+        // Función para limpiar la salida
+        function limpiarSalida() {
+            outputArea.innerHTML = '<span class="info">Salida limpiada. Ejecuta código para ver nuevos resultados.</span>';
+        }
+        
+        // Funciones para cargar ejemplos
+        function cargarEjemplo(numero) {
+            let ejemploCodigo = '';
+            
+            switch(numero) {
+                case 1:
+                    // Ejemplo 1: Contador básico
+                    ejemploCodigo = `// CONTADOR BÁSICO con WHILE y CASE
+let numero = 0;
+let texto = "";
+
+console.log("Iniciando contador del 0 al 4:");
+
+while (numero < 5) {
+    switch(numero) {
+        case 0:
+            texto = "Cero";
+            break;
+        case 1:
+            texto = "Uno";
+            break;
+        case 2:
+            texto = "Dos";
+            break;
+        case 3:
+            texto = "Tres";
+            break;
+        case 4:
+            texto = "Cuatro";
+            break;
+        default:
+            texto = "Desconocido";
+    }
+    
+    console.log("Número", numero, "=>", texto);
+    numero++;
+}
+
+console.log("\\nContador completado.");`;
+                    break;
+                    
+                case 2:
+                    // Ejemplo 2: Verificar cadena binaria
+                    ejemploCodigo = `// VERIFICAR SI UNA CADENA ES BINARIA
+function verificarBinario(cadena) {
+    let i = 0;
+    let esValido = true;
+    
+    console.log("Analizando cadena: '" + cadena + "'");
+    
+    while (i < cadena.length) {
+        const caracter = cadena[i];
+        
+        switch(caracter) {
+            case '0':
+                console.log("  Posición", i + ": '0' ✓");
+                break;
+            case '1':
+                console.log("  Posición", i + ": '1' ✓");
+                break;
+            default:
+                console.log("  Posición", i + ": '" + caracter + "' ✗ NO ES BINARIO");
+                esValido = false;
+                return esValido; // Salir temprano
+        }
+        i++;
+    }
+    
+    return esValido;
+}
+
+// Probar con diferentes cadenas
+const pruebas = ["101010", "111000", "102001", "010203", "111111"];
+
+pruebas.forEach((cadena, index) => {
+    console.log("\\n--- Prueba " + (index + 1) + " ---");
+    const resultado = verificarBinario(cadena);
+    console.log("Resultado final:", resultado ? "✓ BINARIO VÁLIDO" : "✗ NO ES BINARIO");
+});`;
+                    break;
+                    
+                case 3:
+                    // Ejemplo 3: Autómata par/impar
+                    ejemploCodigo = `// AUTÓMATA: Contar cantidad de '1's (par/impar)
+function automataParImpar(cadena) {
+    let estado = 0; // 0 = par, 1 = impar
+    let posicion = 0;
+    let conteoUnos = 0;
+    
+    console.log("Autómata Par/Impar para: '" + cadena + "'");
+    console.log("Estado inicial: PAR (0)");
+    
+    while (posicion < cadena.length) {
+        const simbolo = cadena[posicion];
+        
+        console.log("\\nPaso " + (posicion + 1) + ":");
+        console.log("  Símbolo: '" + simbolo + "'");
+        console.log("  Estado actual:", estado === 0 ? "PAR" : "IMPAR");
+        
+        switch(estado) {
+            case 0: // Estado PAR
+                if (simbolo === '1') {
+                    estado = 1;
+                    conteoUnos++;
+                    console.log("  Transición: PAR → IMPAR (encontré '1')");
+                } else {
+                    console.log("  Mantengo estado PAR (símbolo '" + simbolo + "')");
+                }
+                break;
+                
+            case 1: // Estado IMPAR
+                if (simbolo === '1') {
+                    estado = 0;
+                    conteoUnos++;
+                    console.log("  Transición: IMPAR → PAR (encontré '1')");
+                } else {
+                    console.log("  Mantengo estado IMPAR (símbolo '" + simbolo + "')");
+                }
+                break;
+        }
+        
+        posicion++;
+    }
+    
+    console.log("\\n=== RESULTADO FINAL ===");
+    console.log("Total de '1's encontrados:", conteoUnos);
+    console.log("Estado final:", estado === 0 ? "PAR" : "IMPAR");
+    console.log("La cadena tiene una cantidad", estado === 0 ? "PAR" : "IMPAR", "de '1's");
+    
+    return estado === 0 ? "PAR" : "IMPAR";
+}
+
+// Probar el autómata
+console.log("=== PRUEBA DEL AUTÓMATA PAR/IMPAR ===\\n");
+const resultado1 = automataParImpar("110101");
+console.log("\\n" + "=".repeat(50) + "\\n");
+const resultado2 = automataParImpar("1111");`;
+                    break;
+                    
+                case 4:
+                    // Ejemplo 4: Secuencia de vocales
+                    ejemploCodigo = `// AUTÓMATA: Secuencia específica A -> E -> I
+function secuenciaVocales(cadena) {
+    let estado = 0; // 0: espera 'a', 1: espera 'e', 2: espera 'i', 3: éxito
+    let posicion = 0;
+    
+    console.log("Autómata de secuencia A->E->I");
+    console.log("Cadena a procesar: '" + cadena + "'\\n");
+    
+    while (posicion < cadena.length && estado < 3) {
+        const simbolo = cadena[posicion].toLowerCase();
+        
+        console.log("Paso " + (posicion + 1) + ": símbolo '" + simbolo + "'");
+        console.log("  Estado actual:", 
+            estado === 0 ? "Esperando 'a'" :
+            estado === 1 ? "Esperando 'e'" :
+            estado === 2 ? "Esperando 'i'" : "ACEPTADO");
+        
+        switch(estado) {
+            case 0:
+                if (simbolo === 'a') {
+                    estado = 1;
+                    console.log("  ✓ Correcto! Ahora espero 'e'");
+                } else {
+                    console.log("  ✗ Error! Se esperaba 'a'");
+                    return "RECHAZADA";
+                }
+                break;
+                
+            case 1:
+                if (simbolo === 'e') {
+                    estado = 2;
+                    console.log("  ✓ Correcto! Ahora espero 'i'");
+                } else {
+                    console.log("  ✗ Error! Se esperaba 'e'");
+                    return "RECHAZADA";
+                }
+                break;
+                
+            case 2:
+                if (simbolo === 'i') {
+                    estado = 3;
+                    console.log("  ✓ Correcto! Secuencia completada");
+                } else {
+                    console.log("  ✗ Error! Se esperaba 'i'");
+                    return "RECHAZADA";
+                }
+                break;
+        }
+        
+        posicion++;
+    }
+    
+    if (estado === 3) {
+        console.log("\\n✅ SECUENCIA COMPLETA: A -> E -> I");
+        return "ACEPTADA";
+    } else {
+        console.log("\\n❌ SECUENCIA INCOMPLETA");
+        return "RECHAZADA";
+    }
+}
+
+// Probar diferentes cadenas
+console.log("=== PRUEBAS DEL AUTÓMATA ===\\n");
+
+const pruebasVocales = ["aei", "aex", "abc", "ae", "aeix", "AEI", "aEi"];
+pruebasVocales.forEach((cadena, idx) => {
+    console.log("\\n" + "=".repeat(40));
+    console.log("Prueba " + (idx + 1) + ": '" + cadena + "'");
+    console.log("=".repeat(40));
+    const resultado = secuenciaVocales(cadena);
+    console.log("Resultado final:", resultado);
+});`;
+                    break;
+            }
+            
+            // Cargar el ejemplo en el editor
+            codeInput.value = ejemploCodigo;
+            
+            // Mostrar mensaje
+            outputArea.innerHTML = `<span class="info">
+                ✅ Ejemplo ${numero} cargado.<br>
+                Presiona "Ejecutar Código" o Ctrl+Enter para ver los resultados.
+            </span>`;
+        }
+        
+        // Inicializar con un mensaje útil
+        outputArea.innerHTML = `<div style="color: #cc0066;">
+            <strong>👋 ¡Listo para ejecutar código!</strong><br><br>
+            <strong>Instrucciones:</strong>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Escribe código JavaScript con estructuras WHILE y CASE</li>
+                <li>Usa <code>console.log()</code> para mostrar resultados</li>
+                <li>Presiona "Ejecutar Código" o Ctrl+Enter</li>
+                <li>Prueba los ejemplos rápidos para empezar</li>
+            </ol>
+            <br>
+            <em>💡 Tip: Puedes modificar los ejemplos y ver cómo cambian los resultados</em>
+        </div>`;
+    </script>
+</body>
+</html>

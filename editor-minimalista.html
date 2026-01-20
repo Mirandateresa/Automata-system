@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor CASE/WHILE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Courier New', monospace; 
+            background: #ffe6f2; 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            color: #cc0066; 
+        }
+        .main { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr; 
+            gap: 20px; 
+        }
+        @media (max-width: 768px) { 
+            .main { grid-template-columns: 1fr; } 
+        }
+        .editor-container, .output-container { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 20px; 
+            box-shadow: 0 0 10px rgba(204,0,102,0.1); 
+        }
+        textarea { 
+            width: 100%; 
+            height: 400px; 
+            border: 2px solid #ff99cc; 
+            border-radius: 5px; 
+            padding: 15px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            resize: vertical; 
+            background: #fffafc; 
+        }
+        textarea:focus { 
+            outline: none; 
+            border-color: #cc0066; 
+        }
+        .buttons { 
+            margin-top: 15px; 
+            display: flex; 
+            gap: 10px; 
+        }
+        button { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: 0.3s; 
+        }
+        .run-btn { 
+            background: #ff66b2; 
+            color: white; 
+            flex: 1; 
+        }
+        .run-btn:hover { 
+            background: #cc0066; 
+        }
+        .example-btn { 
+            background: #ffccdd; 
+            color: #cc0066; 
+            border: 2px solid #ff99cc; 
+        }
+        .example-btn:hover { 
+            background: #ff99cc; 
+        }
+        .output { 
+            height: 400px; 
+            overflow-y: auto; 
+            background: #fffafc; 
+            border: 2px solid #ff99cc; 
+            border-radius: 5px; 
+            padding: 15px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            white-space: pre-wrap; 
+        }
+        .syntax { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #fff0f5; 
+            border-radius: 5px; 
+            border-left: 4px solid #ff66b2; 
+        }
+        .syntax h3 { 
+            color: #cc0066; 
+            margin-bottom: 10px; 
+        }
+        .syntax pre { 
+            background: white; 
+            padding: 10px; 
+            border-radius: 3px; 
+            overflow-x: auto; 
+            font-size: 12px; 
+        }
+        .footer { 
+            text-align: center; 
+            margin-top: 20px; 
+            color: #cc6699; 
+            font-size: 12px; 
+        }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Editor de Estructuras CASE/WHILE</h1>
+            <p>Escribe y prueba tus autómatas con estructuras CASE y WHILE</p>
+        </div>
+        
+        <div class="main">
+            <div class="editor-container">
+                <textarea id="code" placeholder="// Escribe aquí tu código con estructuras CASE y WHILE
+
+// EJEMPLO: Autómata para contar 1s
+function contarUnos(cadena) {
+    let estado = 0; // 0=par, 1=impar
+    let i = 0;
+    
+    // WHILE para recorrer la cadena
+    while (i < cadena.length) {
+        // CASE para transiciones
+        switch(estado) {
+            case 0:
+                if (cadena[i] === '1') estado = 1;
+                break;
+            case 1:
+                if (cadena[i] === '1') estado = 0;
+                break;
+        }
+        i++;
+    }
+    
+    return estado === 0 ? 'PAR' : 'IMPAR';
+}
+
+// Prueba
+console.log('Resultado:', contarUnos('1101'));">// EJEMPLO: Autómata para verificar binarios
+function esBinario(cadena) {
+    let i = 0;
+    
+    // WHILE para revisar cada carácter
+    while (i < cadena.length) {
+        const simbolo = cadena[i];
+        
+        // CASE para verificar el símbolo
+        switch(simbolo) {
+            case '0':
+            case '1':
+                // Símbolo válido, continuar
+                break;
+            default:
+                return false; // No es binario
+        }
+        i++;
+    }
+    return true; // Es binario
+}
+
+// Pruebas
+console.log('10101 es binario?:', esBinario('10101'));
+console.log('10201 es binario?:', esBinario('10201'));</textarea>
+                
+                <div class="buttons">
+                    <button class="run-btn" onclick="ejecutarCodigo()">▶ Ejecutar (Ctrl+Enter)</button>
+                    <button class="example-btn" onclick="cargarEjemplo()">📋 Ejemplo</button>
+                </div>
+            </div>
+            
+            <div class="output-container">
+                <h3 style="color: #cc0066; margin-bottom: 10px;">📊 Salida:</h3>
+                <div id="output" class="output">Presiona "Ejecutar" para ver los resultados...</div>
+                
+                <div class="syntax">
+                    <h3>💡 Sintaxis básica:</h3>
+                    <pre>// ESTRUCTURA WHILE
+while (condicion) {
+    // código que se repite
+}
+
+// ESTRUCTURA CASE/SWITCH
+switch(variable) {
+    case valor1:
+        // código para valor1
+        break;
+    case valor2:
+        // código para valor2
+        break;
+    default:
+        // código por defecto
+}
+
+// COMBINACIÓN
+while (i < n) {
+    switch(estado) {
+        case 0: /* transición */ break;
+        case 1: /* transición */ break;
+    }
+    i++;
+}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Editor minimalista para estructuras CASE y WHILE | Crea y prueba autómatas</p>
+        </div>
+    </div>
+
+    <script>
+        // Referencias a elementos
+        const codeTextarea = document.getElementById('code');
+        const outputDiv = document.getElementById('output');
+        
+        // Ejecutar con Ctrl+Enter
+        codeTextarea.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                ejecutarCodigo();
+            }
+        });
+        
+        // Función para ejecutar código
+        function ejecutarCodigo() {
+            const codigo = codeTextarea.value;
+            outputDiv.innerHTML = '<span style="color: #ff66b2;">⚙️ Ejecutando código...</span>';
+            
+            setTimeout(() => {
+                try {
+                    // Capturar console.log
+                    let logs = [];
+                    const originalLog = console.log;
+                    console.log = function(...args) {
+                        logs.push(args.join(' '));
+                        originalLog.apply(console, args);
+                    };
+                    
+                    // Ejecutar
+                    eval(codigo);
+                    
+                    // Restaurar console.log
+                    console.log = originalLog;
+                    
+                    // Mostrar resultados
+                    if (logs.length === 0) {
+                        outputDiv.innerHTML = '<span style="color: #666;">✅ Código ejecutado sin errores (no hay console.log)</span>';
+                    } else {
+                        outputDiv.innerHTML = logs.map(log => 
+                            `<div style="margin: 5px 0; padding: 5px; border-left: 3px solid #ff66b2; background: #fff5f9;">
+                                ${log}
+                            </div>`
+                        ).join('');
+                    }
+                } catch (error) {
+                    outputDiv.innerHTML = `
+                        <div style="color: red; padding: 10px; background: #fff0f0; border-radius: 5px;">
+                            <strong>❌ Error:</strong><br>
+                            ${error.toString()}
+                        </div>`;
+                }
+            }, 100);
+        }
+        
+        // Función para cargar ejemplo
+        function cargarEjemplo() {
+            codeTextarea.value = `// AUTÓMATA: Secuencia de vocales específica
+function secuenciaVocales(cadena) {
+    let estado = 0; // 0=espera 'a', 1=espera 'e', 2=espera 'i', 3=éxito
+    let i = 0;
+    
+    console.log('Procesando: "' + cadena + '"');
+    
+    // WHILE para recorrer la cadena
+    while (i < cadena.length) {
+        const simbolo = cadena[i].toLowerCase();
+        
+        // CASE para transiciones de estados
+        switch(estado) {
+            case 0:
+                if (simbolo === 'a') {
+                    console.log('  Paso ' + (i+1) + ': a → estado 1');
+                    estado = 1;
+                } else {
+                    console.log('  Error en paso ' + (i+1) + ': se esperaba "a"');
+                    return 'RECHAZADA';
+                }
+                break;
+                
+            case 1:
+                if (simbolo === 'e') {
+                    console.log('  Paso ' + (i+1) + ': e → estado 2');
+                    estado = 2;
+                } else {
+                    console.log('  Error en paso ' + (i+1) + ': se esperaba "e"');
+                    return 'RECHAZADA';
+                }
+                break;
+                
+            case 2:
+                if (simbolo === 'i') {
+                    console.log('  Paso ' + (i+1) + ': i → estado 3 (ACEPTADA)');
+                    estado = 3;
+                } else {
+                    console.log('  Error en paso ' + (i+1) + ': se esperaba "i"');
+                    return 'RECHAZADA';
+                }
+                break;
+                
+            case 3:
+                console.log('  Cadena ya aceptada, símbolo adicional: ' + simbolo);
+                break;
+        }
+        i++;
+    }
+    
+    return estado === 3 ? 'ACEPTADA' : 'RECHAZADA';
+}
+
+// Pruebas
+console.log('--- Prueba 1: aei ---');
+console.log('Resultado:', secuenciaVocales('aei'));
+console.log('\\n--- Prueba 2: aex ---');
+console.log('Resultado:', secuenciaVocales('aex'));
+console.log('\\n--- Prueba 3: abc ---');
+console.log('Resultado:', secuenciaVocales('abc'));`;
+            
+            outputDiv.innerHTML = '<span style="color: #ff66b2;">📋 Ejemplo cargado. Presiona "Ejecutar" para probarlo.</span>';
+        }
+        
+        // Mensaje inicial
+        outputDiv.innerHTML = `
+            <div style="color: #cc0066; padding: 10px;">
+                <strong>👋 ¡Bienvenido!</strong><br><br>
+                <strong>Instrucciones:</strong>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>Escribe código en el área izquierda</li>
+                    <li>Usa <code>console.log()</code> para mostrar resultados</li>
+                    <li>Presiona "Ejecutar" o Ctrl+Enter</li>
+                    <li>Prueba estructuras WHILE y CASE</li>
+                </ul>
+                <br>
+                <em>Tip: Haz clic en "Ejemplo" para cargar un autómata de ejemplo</em>
+            </div>`;
+    </script>
+</body>
+</html>
